@@ -12,17 +12,24 @@ You will have to create the table temp as follows:
 
 
 DECLARE
-    X NUMBER := 1000;
+-- variables declared
+    X NUMBER := 0; 
     V_COUNTER NUMBER := 0;
 BEGIN
-  LOOP
-    V_COUNTER := V_COUNTER + 1;
-    IF V_COUNTER > 20 THEN
-      EXIT;
-    END IF;
-    INSERT INTO TEMP
-    VALUES (X, V_COUNTER, 'in INNER loop');
-  END LOOP;
+    LOOP -- first loop 
+        V_COUNTER := V_COUNTER + 1;
+            IF V_COUNTER > 4 THEN
+            EXIT;
+            END IF;
+        LOOP
+            V_COUNTER := V_COUNTER + 1;
+            IF V_COUNTER > 20 THEN
+            EXIT;
+            END IF;
+        INSERT INTO TEMP
+        VALUES (X, V_COUNTER, 'in INNER loop');
+      END LOOP;
+    END LOOP;
 END;
 
 select * from temp;
