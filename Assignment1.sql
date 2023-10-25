@@ -50,3 +50,33 @@ END;
 select * from temp;
 DELETE TEMP;
 DROP TABLE TEMP;
+
+
+-- Yulia Flenova 
+-- N01342767 
+
+-- QUESTION 4
+DECLARE
+-- SET UP VARIABLES
+    V_FIRST_NAME EMPLOYEES.FIRST_NAME%TYPE;
+    V_HIRE_DATE EMPLOYEES.HIRE_DATE%TYPE;
+    V_YEARS_WORKED NUMBER;
+    
+    --SET UP CURSOR
+    CURSOR CUR_EMPLOYEES IS
+    SELECT FIRST_NAME, HIRE_DATE
+    FROM EMPLOYEES 
+    WHERE DEPARTMENT_ID = 80 OR DEPARTMENT_ID = 85; -- SALES EUROPE AND SALES AMERICA
+BEGIN
+    -- Loop through the employees
+    DBMS_OUTPUT.PUT_LINE ( 'Annonymus block completed'); --MESSAGE FROM EXAMPLE
+    -- start loop in cursor
+    FOR emp_rec IN CUR_EMPLOYEES
+        LOOP
+            V_FIRST_NAME := emp_rec.first_name;
+            V_HIRE_DATE := emp_rec.hire_date;
+            V_YEARS_WORKED := TRUNC(MONTHS_BETWEEN(SYSDATE, V_HIRE_DATE) / 12);
+            -- Display employee name and years worked
+            DBMS_OUTPUT.PUT_LINE('The ' || V_FIRST_NAME || ' has worked in the company for ' || V_YEARS_WORKED);
+        END LOOP ;
+END;
