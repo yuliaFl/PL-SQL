@@ -89,12 +89,39 @@ EXCEPTION
 END; 
 
 --============================================================================
--- QUESTION 7.4 - 1
+-- QUESTION 7.4 - 1 B
+DECLARE
+  v_country_name countries.country_name%TYPE;
+  v_currency countries.currency_code%TYPE;
+BEGIN
+  DECLARE
+    e_no_currency EXCEPTION;
+  BEGIN
+    SELECT country_name, currency_code INTO v_country_name, v_currency
+    FROM countries
+    WHERE country_id = 5;
+
+    IF v_currency = 'NONE' THEN
+      RAISE e_no_currency;
+    END IF;
+  END;
+
+  EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+      DBMS_OUTPUT.PUT_LINE('The country does not exist');
+    WHEN e_no_currency THEN
+      DBMS_OUTPUT.PUT_LINE('This country exists but has no currency');
+    WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('Another type of error occurred');
+END;
+--============================================================================
+-- QUESTION 7.4 - 1 C
 DECLARE 
     v_country_name     countries.country_name%TYPE;   
     v_currency_code     countries.currency_code%TYPE; 
-    e_no_currency    	 	EXCEPTION; 
+
 BEGIN   DECLARE 
+    e_no_currency    	 	EXCEPTION; 
   BEGIN 
     SELECT country_name, currency_code INTO v_country_name, v_currency_code 
       FROM countries 
@@ -107,7 +134,8 @@ BEGIN   DECLARE
       WHEN NO_DATA_FOUND THEN 
         DBMS_OUTPUT.PUT_LINE('This country does not exist'); 
       WHEN e_no_currency THEN 
-        DBMS_OUTPUT.PUT_LINE('This country exists but has no currency');     END; 
+        DBMS_OUTPUT.PUT_LINE('This country exists but has no currency');  
+    END; 
   EXCEPTION 
     WHEN OTHERS THEN 
       DBMS_OUTPUT.PUT_LINE('Another type of error occurred'); 
