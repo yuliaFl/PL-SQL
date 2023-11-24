@@ -1,0 +1,41 @@
+-- Yulia Flenova
+-- N01342767 
+-- LAB 10/11
+
+CREATE OR REPLACE PACKAGE HELLOFROM AS 
+    PROCEDURE PROC_1;
+END HELLOFROM;
+
+
+CREATE OR REPLACE PACKAGE BODY HELLOFROM AS
+    --PROCEDURE PROC_2;
+    --PROCEDURE PROC_3;
+    PROCEDURE PROC_1 IS 
+    BEGIN 
+        DBMS_OUTPUT.PUT_LINE('HELLO FROM PROC 1');
+        PROC_2;
+    END PROC_1;
+    
+    PROCEDURE PROC_2 IS
+    BEGIN 
+        DBMS_OUTPUT.PUT_LINE('HELLO FROM PROC 2');
+        PROC_3;
+    END PROC_2;
+    
+    PROCEDURE PROC_3 IS
+    BEGIN 
+        DBMS_OUTPUT.PUT_LINE('HELLO FROM PROC 3');
+    END PROC_3;
+    
+END HELLOFROM;
+
+SET SERVEROUTPUT ON
+    BEGIN
+    hellofrom.proc_1;
+END; 
+
+-- 10.2
+DESCRIBE HELLOFROM;
+
+--==============================================================================
+
